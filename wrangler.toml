@@ -1,0 +1,19 @@
+name = "wb-scheduler"
+main = "src/index.js"
+compatibility_date = "2026-08-01"
+
+# 触发时刻（UTC）
+#   0 * * * *   = 每小时（缓存保活双触发源）
+#   0 6 * * *   = 北京 14:00（运维每日维护 / 周一评估）
+[triggers]
+crons = ["0 * * * *", "0 6 * * *"]
+
+[vars]
+# 公开 base，无需保密
+WB_API_BASE = "https://api.workbuddy.tencent.com"
+
+# —— 以下为 secret，用 `wrangler secret put` 注入，绝不写进文件/仓库 ——
+# WB_TOKEN         WorkBuddy 管理后台开启 API 权限后获取的 Bearer Token
+# WB_KEEPALIVE_ID  缓存保活自动化 ID（默认 automation-1784789189509；若 API 要求 workflow_id 格式则在后台查实际值）
+# WB_OPS_ID        运维每日自动化 ID（默认 automation-1783736219300）
+# ALERT_WEBHOOK    钉钉/企微机器人 webhook（可选；触发失败告警用）
